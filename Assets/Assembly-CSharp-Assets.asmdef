@@ -2,6 +2,7 @@
     "name": "Assembly-CSharp-Assets",
     "rootNamespace": "",
     "references": [
+        "GUID:ee7f59caf8b4bb54c955ea2ffa6dcfee",
         "GUID:301929b7186ac9542b7511b3e4692309",
         "GUID:593a5b492d29ac6448b1ebf7f035ef33",
         "GUID:029c1c1b674aaae47a6841a0b89ad80e",

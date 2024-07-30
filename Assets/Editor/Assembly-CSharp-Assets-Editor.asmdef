@@ -2,6 +2,7 @@
     "name": "Assembly-CSharp-Assets-Editor",
     "rootNamespace": "",
     "references": [
+        "GUID:ee7f59caf8b4bb54c955ea2ffa6dcfee",
         "GUID:838d3286f0973344ab6e99d3951012f7",
         "GUID:b17f1efeae860a940881c042d852487a",
         "GUID:301929b7186ac9542b7511b3e4692309",
