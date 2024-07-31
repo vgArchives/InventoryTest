@@ -2,7 +2,14 @@
     "name": "Tatsu.Core",
     "rootNamespace": "Tatsu.Core",
     "references": [
-        "Coimbra"
+        "Coimbra",
+        "Coimbra.Editor",
+        "Coimbra.Listeners",
+        "Coimbra.Services",
+        "Coimbra.Services.ApplicationStateEvents",
+        "Coimbra.Services.Editor",
+        "Coimbra.Services.Events",
+        "Unity.TextMeshPro"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
