@@ -7,5 +7,7 @@ namespace Tatsu.Core
     public interface IPlayerStatsService : IService
     {
         public SerializableDictionary<StatType, Stat> PlayerStats { get;}
+
+        public void ResetStat(StatType statType);
     }
 }

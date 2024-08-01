@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.coffee.ui-effect": "4.0.0-preview.10",
     "com.coimbrastudios.core": "11.0.5",
     "com.unity.collab-proxy": "2.4.4",
     "com.unity.ide.rider": "3.0.25",
@@ -49,7 +50,8 @@
       "url": "https://package.openupm.com",
       "scopes": [
         "com.coimbrastudios.core",
-        "com.cysharp.unitask"
+        "com.cysharp.unitask",
+        "com.coffee.ui-effect"
       ]
     }
   ]

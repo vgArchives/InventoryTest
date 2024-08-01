@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 510b9cca1e4e41c282f3bdf1aae15228, type: 3}
+  m_Name: HealingSalve
+  m_EditorClassIdentifier: 
+  _itemName: Healing Salve
+  _itemDescription: Restores 50 Health points
+  _itemSprite: {fileID: 21300000, guid: 17e5a0649f629284f9c28e73326b9a1b, type: 3}
+  _itemType: 4
+  _affectedStats:
+    _list:
+    - _key: 1
+      _value: 50
+    _new: 0

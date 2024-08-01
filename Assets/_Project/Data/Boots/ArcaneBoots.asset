@@ -9,14 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 510b9cca1e4e41c282f3bdf1aae15228, type: 3}
-  m_Name: ClarityPotion
+  m_Script: {fileID: 11500000, guid: 2ea4bb2be8d9415dadee052796ff90d5, type: 3}
+  m_Name: ArcaneBoots
   m_EditorClassIdentifier: 
-  _itemName: Clarity Potion
-  _itemDescription: Restores 25 mana points
-  _itemSprite: {fileID: 21300000, guid: 08e1ffcd38a1a6643a35d3a89e0962c2, type: 3}
+  _itemName: Arcane Boots
+  _itemDescription: Gives a bonus of +10 points in Intelligence
+  _itemSprite: {fileID: 21300000, guid: c1e10830e50213e4b83bc791e9846adb, type: 3}
+  _itemType: 3
   _affectedStats:
     _list:
-    - _key: 2
-      _value: 25
+    - _key: 5
+      _value: 10
     _new: 0

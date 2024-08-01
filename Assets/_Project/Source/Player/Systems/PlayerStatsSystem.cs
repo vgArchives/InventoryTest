@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Coimbra;
 using UnityEngine;
@@ -11,6 +12,14 @@ namespace Tatsu.Core
         private PlayerStatsSystem() { }
 
         public SerializableDictionary<StatType, Stat> PlayerStats => _playerStats;
+        
+        public void ResetStat(StatType statType)
+        {
+            if (_playerStats.TryGetValue(statType, out Stat stat))
+            {
+                stat.ResetStat();
+            }
+        }
         
         protected override void OnInitialize()
         {

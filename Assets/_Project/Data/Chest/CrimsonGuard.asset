@@ -10,16 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2ea4bb2be8d9415dadee052796ff90d5, type: 3}
-  m_Name: Yasha
+  m_Name: CrimsonGuard
   m_EditorClassIdentifier: 
-  _itemName: Sword
-  _itemDescription: Gives a bonus of +50 points of agility but reduce your strenght
-    in -20 points
-  _itemSprite: {fileID: 21300000, guid: 4b5d13557ecdb9a4e98983eb237e7185, type: 3}
+  _itemName: Crimson Guard
+  _itemDescription: Gives a bonus of +15 points in Strength
+  _itemSprite: {fileID: 21300000, guid: 8092a8f83e8726b42a5f2d8eb56da8e4, type: 3}
+  _itemType: 2
   _affectedStats:
     _list:
-    - _key: 4
-      _value: 50
     - _key: 3
-      _value: -20
+      _value: 15
     _new: 0

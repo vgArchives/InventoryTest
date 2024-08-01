@@ -9,7 +9,8 @@
         "Coimbra.Services.ApplicationStateEvents",
         "Coimbra.Services.Editor",
         "Coimbra.Services.Events",
-        "Unity.TextMeshPro"
+        "Unity.TextMeshPro",
+        "UIEffect"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
