@@ -7,7 +7,10 @@ namespace Tatsu.Core
 {
     public class PlayerStatsSystem : Actor, IPlayerStatsService
     {
+        [Space(10)] 
+        [SerializeField] private PlayerInformationData _playerData;
         [Space(10)]
+        
         [SerializeField] private SerializableDictionary<StatType, Stat> _playerStats;
         
         private PlayerStatsSystem() { }
@@ -16,6 +19,7 @@ namespace Tatsu.Core
         private IPlayerAnimationsService _playerAnimationsService;
 
         public bool IsAlive => _isAlive;
+        public PlayerInformationData PlayerData => _playerData;
         public SerializableDictionary<StatType, Stat> PlayerStats => _playerStats;
         
         public void AddStatValue(StatType statType, int value)
@@ -42,7 +46,7 @@ namespace Tatsu.Core
             
             stat.UpdateStat(-value);
         }
-
+        
         protected override void OnInitialize()
         {
             base.OnInitialize();
@@ -53,16 +57,21 @@ namespace Tatsu.Core
             {
                 stat.Value.Initialize();
                 
-                if (stat.Key== StatType.Health)
+                if (stat.Key == StatType.Health)
                 {
                     stat.Value.OnStatValueChange += HandleHealthValueChange;
+                }
+
+                if (stat.Key == StatType.Mana)
+                {
+                    stat.Value.OnStatValueChange += HandleManaValueChange;
                 }
             }
 
             _isAlive = true;
         }
 
-        private void HandleHealthValueChange(int originalValue, int effectiveValue, int maximumValue)
+        private void HandleHealthValueChange(int originalValue, int effectiveValue, int maximumValue, int previousEffectiveValue)
         {
             if (effectiveValue == 0)
             {  
@@ -70,11 +79,23 @@ namespace Tatsu.Core
             }
             
             SetAliveStatus(effectiveValue);
+
+            new PlayerHealthChangeEvent(effectiveValue, previousEffectiveValue).Invoke(this);
+        }
+        
+        private void HandleManaValueChange(int originalValue, int effectiveValue, int maximumValue, int previousEffectiveValue)
+        {
+            new PlayerManaChangeEvent(effectiveValue).Invoke(this);
         }
 
         private void SetAliveStatus(int healtValue)
         {
             _isAlive = healtValue > 0;
+        }
+        
+        public Stat GetStat(StatType statType)
+        {
+            return _playerStats.GetValueOrDefault(statType);
         }
     }
 }

@@ -11,6 +11,7 @@ namespace Tatsu.Core
         
         private InventorySystem() { }
 
+        private const int DefaultItemQuantity = 1;
         private const int PoisonItemId = 3;
         
         private IPlayerAnimationsService _playerAnimationsService;
@@ -53,7 +54,20 @@ namespace Tatsu.Core
             }
             else
             {
-                _inventoryItems.Remove(itemBaseData);
+                RemoveItem(itemBaseData);
+            }
+        }
+
+        public void RemoveItem(ItemBaseData itemToRemove)
+        {
+            _inventoryItems.Remove(itemToRemove);
+        }
+
+        public void TryAddItem(ItemBaseData itemToAdd)
+        {
+            if (!_inventoryItems.ContainsKey(itemToAdd))
+            {
+                _inventoryItems.Add(itemToAdd, DefaultItemQuantity);
             }
         }
         

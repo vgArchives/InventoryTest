@@ -10,7 +10,8 @@
         "Coimbra.Services.Editor",
         "Coimbra.Services.Events",
         "Unity.TextMeshPro",
-        "UIEffect"
+        "UIEffect",
+        "DOTween.Modules"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

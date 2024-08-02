@@ -20,6 +20,9 @@ namespace Tatsu.Core
         [SerializeField] private RectTransform _rectTransform;
         [SerializeField] private Canvas _canvas;
         [SerializeField] private CanvasGroup _canvasGroup;
+        [Space(10)] 
+        
+        [SerializeField] private SlotType _currentSlotType;
         
         [Space(10)] 
         [SerializeField] private ItemTooltipView _itemTooltipView;
@@ -47,6 +50,7 @@ namespace Tatsu.Core
         
         public ItemBaseData ItemBaseData => _itemBaseData;
         public RectTransform RectTransform => _rectTransform;
+        public SlotType CurrentSlotType { get => _currentSlotType; set => _currentSlotType = value; }
 
         public void OnPointerClick(PointerEventData eventData)
         {
@@ -97,10 +101,11 @@ namespace Tatsu.Core
             
             if (dragDestinationObject == null)
             {
-                ResetPositionToOrigin();
+                ResetItemPosition();
                 return;
             }
             
+            // When releasing the item on top of an empty equipment slot
             if (dragDestinationObject.TryGetComponent(out EquipmentDropZone equipmentDropZone))
             {
                 bool isPlayerAlive = _playerStatsService.IsAlive;
@@ -108,24 +113,36 @@ namespace Tatsu.Core
 
                 if (!isPlayerAlive || !isSameType)
                 {
-                    ResetPositionToOrigin();
+                    ResetItemPosition();
                     return;
                 }
-                
+
+                _currentSlotType = SlotType.Equipment;
+                _inventoryService.RemoveItem(_itemBaseData);
                 _equipmentService.EquipItem(_itemBaseData as EquipmentItemData);
-                
+
                 MoveItemToEmptySlot(equipmentDropZone.RectTransform);
                 return;
             }
             
+            // When releasing the item on top of an empty inventory slot
             if (dragDestinationObject.TryGetComponent(out InventoryDropZone inventoryDropZone))
             {
+                if (_currentSlotType == SlotType.Equipment)
+                {
+                    _equipmentService.UnequipItem(_itemBaseData.ItemType);
+                }
+                
+                _currentSlotType = SlotType.Inventory;
+                _inventoryService.TryAddItem(_itemBaseData);
+                
                 MoveItemToEmptySlot(inventoryDropZone.RectTransform);
                 return;
             }
             
             if (dragDestinationObject.TryGetComponent(out ItemSlotView itemSlotView))
             {
+                // When releasing the item on top of an occupied equipment slot
                 EquipmentDropZone equipmentZone = itemSlotView.GetComponentInParent<EquipmentDropZone>();
 
                 if (equipmentZone != null)
@@ -135,27 +152,73 @@ namespace Tatsu.Core
 
                     if (!isPlayerAlive || !isSameType)
                     {
-                        ResetPositionToOrigin();
+                        ResetItemPosition();
                         return;
                     }
                     
-                    _equipmentService.EquipItem(_itemBaseData as EquipmentItemData);
+                    SwapItemState(itemSlotView, SlotType.Equipment, SlotType.Inventory, _itemBaseData, 
+                        itemSlotView.ItemBaseData, itemSlotView.ItemBaseData.ItemType, _itemBaseData as EquipmentItemData);
                     
                     MoveItemToOccupiedSlot(itemSlotView);
                     return;
                 }
                 
+                // When releasing the item on top of an occupied inventory slot
                 InventoryDropZone inventoryZone = itemSlotView.GetComponentInParent<InventoryDropZone>();
 
                 if (inventoryZone != null)
                 {
-                    MoveItemToOccupiedSlot(itemSlotView);
-                    
-                    return;
+                    switch (_currentSlotType)
+                    {
+                        case SlotType.Inventory:
+                        {
+                            MoveItemToOccupiedSlot(itemSlotView);
+                            return;
+                        }
+                        case SlotType.Equipment:
+                        {
+                            if (CheckForSameType(_itemBaseData.ItemType, itemSlotView.ItemBaseData.ItemType))
+                            {
+                                SwapItemState(itemSlotView, SlotType.Inventory, SlotType.Equipment, itemSlotView.ItemBaseData, 
+                                    _itemBaseData, _itemBaseData.ItemType, itemSlotView.ItemBaseData as EquipmentItemData);
+                                
+                                MoveItemToOccupiedSlot(itemSlotView);
+                            }
+                            else
+                            {
+                                ResetItemPosition();  
+                            }
+                            
+                            return;
+                        }
+                        case SlotType.None:
+                        default:
+                        {
+                            ResetItemPosition();  
+                            return;    
+                        }
+                    }
                 }
             }
             
-            ResetPositionToOrigin();
+            ResetItemPosition();
+        }
+
+        /// <summary>
+        /// This method will swap the position of two slots that are occupied by items while adding, removing, and equipping
+        /// then to corresponding systems
+        /// </summary>
+        private void SwapItemState(ItemSlotView destinationslot, SlotType draggedNewSlotType, SlotType destinationNewSlotType, ItemBaseData removedFromInventory, 
+            ItemBaseData addedToInventory, ItemType unequippedItem, EquipmentItemData equippedItem)
+        {
+            _currentSlotType = draggedNewSlotType;
+            destinationslot.CurrentSlotType = destinationNewSlotType;
+                            
+            _inventoryService.RemoveItem(removedFromInventory);
+            _inventoryService.TryAddItem(addedToInventory);
+                            
+            _equipmentService.UnequipItem(unequippedItem);
+            _equipmentService.EquipItem(equippedItem);
         }
         
         public void Initialize(ItemBaseData itemBaseData, int quantity)
@@ -165,11 +228,13 @@ namespace Tatsu.Core
             
             _slotQuantity.SetText($"{quantity:00}");
             _slotQuantity.gameObject.SetActive(itemBaseData.ItemType == ItemType.Consumable);
+
+            _currentSlotType = SlotType.Inventory;
             
             _itemTooltipView.Initialize(itemBaseData.ItemName, itemBaseData.ItemDescription);
         }
         
-        public void UpdateQuantity(int quantity)
+        public void UpdateItemQuantity(int quantity)
         {
             if (quantity == 0)
             {
@@ -220,7 +285,7 @@ namespace Tatsu.Core
             ResetCanvasGroup();
         }
 
-        private void ResetPositionToOrigin()
+        private void ResetItemPosition()
         {
             _rectTransform.anchoredPosition = _originalPosition;
             

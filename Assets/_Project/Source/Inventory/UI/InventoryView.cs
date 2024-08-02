@@ -31,7 +31,7 @@ namespace Tatsu.Core
 
         private void HandleItemConsumedEvent(ref EventContext context, in ItemConsumedEvent e)
         {
-            e.ItemSlotView.UpdateQuantity(e.QuantityRemaining);
+            e.ItemSlotView.UpdateItemQuantity(e.QuantityRemaining);
         }
 
         private void InitializeInventory()

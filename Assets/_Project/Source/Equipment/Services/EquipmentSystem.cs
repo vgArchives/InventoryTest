@@ -19,16 +19,16 @@ namespace Tatsu.Core
 
         public SerializableDictionary<ItemType, EquipmentItemData> PlayerEquippedItems => _playerEquippedItems;
         
-        public void EquipItem(EquipmentItemData itemBaseData)
+        public void EquipItem(EquipmentItemData equipmentData)
         {
-            ItemType itemType = itemBaseData.ItemType;
+            ItemType equipmentType = equipmentData.ItemType;
             
-            if (!_playerEquippedItems.ContainsKey(itemType))
+            if (!_playerEquippedItems.ContainsKey(equipmentType))
             {
                 return;
             }
 
-            if (_playerEquippedItems.TryGetValue(itemType, out EquipmentItemData equipmentItemData))
+            if (_playerEquippedItems.TryGetValue(equipmentType, out EquipmentItemData equipmentItemData))
             {
                 if (equipmentItemData != null)
                 {
@@ -36,26 +36,26 @@ namespace Tatsu.Core
                 }
             }
             
-            _playerEquippedItems[itemType] = itemBaseData;
-            itemBaseData.AddEquipmentStats();
+            equipmentData.AddEquipmentStats();
+            _playerEquippedItems[equipmentType] = equipmentData;
             
             _playerAnimationsService.PlayTriggerAnimation(AnimationType.Positive);
         }
 
-        public void UnequipItem(ItemType itemType)
+        public void UnequipItem(ItemType equipmentType)
         {
-            if (!_playerEquippedItems.TryGetValue(itemType, out EquipmentItemData currentEquipmentData))
+            if (!_playerEquippedItems.TryGetValue(equipmentType, out EquipmentItemData equipmentItemData))
             {
                 return;
             }
 
-            if (currentEquipmentData == null)
+            if (equipmentItemData == null)
             {
                 return;
             }
             
-            currentEquipmentData.RemoveEquipmentStats();
-            _playerEquippedItems[itemType] = null;
+            equipmentItemData.RemoveEquipmentStats();
+            _playerEquippedItems[equipmentType] = null;
             
             _playerAnimationsService.PlayTriggerAnimation(AnimationType.LookAround);
         }

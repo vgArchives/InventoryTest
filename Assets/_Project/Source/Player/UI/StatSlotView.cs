@@ -34,7 +34,7 @@ namespace Tatsu.Core
             stat.Value.OnStatValueChange += HandleStatValueChange;
         }
 
-        private void HandleStatValueChange(int originalValue, int effectiveValue, int maximumValue)
+        private void HandleStatValueChange(int originalValue, int effectiveValue, int maximumValue, int _)
         {
             if (_displayType == StatDisplayType.Percentage)
             {

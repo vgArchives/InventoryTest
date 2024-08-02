@@ -9,5 +9,9 @@ namespace Tatsu.Core
         public SerializableDictionary<ItemBaseData, int> InventoryItems { get; }
         
         public void ConsumeItem(ItemSlotView itemSlotView);
+
+        public void RemoveItem(ItemBaseData itemToRemove);
+
+        public void TryAddItem(ItemBaseData itemToAdd);
     }
 }

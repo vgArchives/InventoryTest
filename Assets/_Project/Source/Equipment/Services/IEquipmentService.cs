@@ -8,8 +8,8 @@ namespace Tatsu.Core
     {
         public SerializableDictionary<ItemType, EquipmentItemData> PlayerEquippedItems { get; }
 
-        public void EquipItem(EquipmentItemData itemBaseData);
+        public void EquipItem(EquipmentItemData equipmentData);
         
-        public void UnequipItem(ItemType itemType);
+        public void UnequipItem(ItemType equipmentType);
     }
 }

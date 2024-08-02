@@ -48,7 +48,10 @@ namespace Tatsu.Core
         
         private void HandleUseSpellButtonClick()
         {
-            if (!GetPlayerAliveState())
+            bool isPlayerAlive = GetPlayerAliveState();
+            bool hasManaToCast = _playerStatsService.GetStat(StatType.Mana).EffectiveValue > 0;
+            
+            if (!isPlayerAlive || !hasManaToCast)
             {
                 return;
             }
