@@ -1,6 +1,8 @@
 using Coffee.UIEffects;
 using Coimbra;
+using Coimbra.Services;
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -8,18 +10,24 @@ using UnityEngine.UI;
 namespace Tatsu.Core
 {
     public class ItemSlotView : MonoBehaviour, 
-        IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler
+        IPointerClickHandler,IPointerEnterHandler, IPointerExitHandler,
+        IBeginDragHandler, IDragHandler, IEndDragHandler
     {
         [SerializeField] private Image _slotItemImage;
-        [SerializeField] private UIDissolve _uiDissolve;
+        [SerializeField] private TextMeshProUGUI _slotQuantity;
         [Space(10)]
         
         [SerializeField] private RectTransform _rectTransform;
         [SerializeField] private Canvas _canvas;
         [SerializeField] private CanvasGroup _canvasGroup;
-
+        
+        [Space(10)] 
+        [SerializeField] private ItemTooltipView _itemTooltipView;
+        [SerializeField] private UIDissolve _uiDissolve;
+        
         private const int DefaultSortingOrder = 1;
-        private const int DragSortingOrder = 2;
+        private const int HoverSortingOrder = 2;
+        private const int DragSortingOrder = 3;
 
         private const float DissolveDuration = 0.25f;
         private const float DissolveEndValue = 1f;
@@ -29,54 +37,62 @@ namespace Tatsu.Core
         
         private Vector2 _originalPosition;
         private ItemBaseData _itemBaseData;
+
+        private IInventoryService _inventoryService;
+        private IEquipmentService _equipmentService;
         
-        private ItemBaseData ItemBaseData => _itemBaseData;
-        private RectTransform RectTransform => _rectTransform;
+        public ItemBaseData ItemBaseData => _itemBaseData;
+        public RectTransform RectTransform => _rectTransform;
 
         public void OnPointerClick(PointerEventData eventData)
         {
             bool isDataNull = _itemBaseData == null;
-            bool isConsumable = _itemBaseData.ItemType == ItemType.Consumable;
+            bool isConsumable = _itemBaseData is ConsumableItemData;
             
             if (isDataNull || !isConsumable)
             {
                 return;
             }
             
-            //refactor
-            _itemBaseData.ResolveItemBehavior();
-            
-            Sequence consumeItemSequence = DOTween.Sequence();
-            consumeItemSequence.SetEase(Ease.Linear);
-            consumeItemSequence.Append(DOTween.To(() => _uiDissolve.effectFactor, value => _uiDissolve.effectFactor = value,
-                DissolveEndValue, DissolveDuration));
-            consumeItemSequence.AppendCallback(() => gameObject.Dispose(true));
+            _inventoryService.ConsumeItem(this);
+        }
+        
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            _canvas.sortingOrder = HoverSortingOrder;
+            _itemTooltipView.gameObject.SetActive(true);
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            _canvas.sortingOrder = DefaultSortingOrder;
+            _itemTooltipView.gameObject.SetActive(false);
         }
         
         public void OnBeginDrag(PointerEventData eventData)
         {
             _originalPosition = _rectTransform.anchoredPosition;
-
-            _canvas.sortingOrder = DragSortingOrder;
-            
             _canvasGroup.alpha = DragCanvasTransparency;
             _canvasGroup.blocksRaycasts = false;
         }
 
         public void OnDrag(PointerEventData eventData)
         {
+            _canvas.sortingOrder = DragSortingOrder;
             _rectTransform.anchoredPosition += eventData.delta;
         }
 
         public void OnEndDrag(PointerEventData eventData)
         {
-            if (eventData.pointerEnter == null)
+            GameObject dragDestinationObject = eventData.pointerEnter ;
+            
+            if (dragDestinationObject == null)
             {
                 ResetPositionToOrigin();
                 return;
             }
             
-            if (eventData.pointerEnter.TryGetComponent(out EquipmentDropZone equipmentDropZone))
+            if (dragDestinationObject.TryGetComponent(out EquipmentDropZone equipmentDropZone))
             {
                 if (!CheckForSameType(_itemBaseData.ItemType, equipmentDropZone.ItemType))
                 {
@@ -84,20 +100,19 @@ namespace Tatsu.Core
                     return;
                 }
                 
-                MoveItemToEmptySlot(equipmentDropZone.RectTransform);
-
-                new ItemEquippedEvent(_itemBaseData as EquipmentItemData).Invoke(this);
+                _equipmentService.EquipItem(_itemBaseData as EquipmentItemData);
                 
+                MoveItemToEmptySlot(equipmentDropZone.RectTransform);
                 return;
             }
             
-            if (eventData.pointerEnter.TryGetComponent(out InventoryDropZone inventoryDropZone))
+            if (dragDestinationObject.TryGetComponent(out InventoryDropZone inventoryDropZone))
             {
                 MoveItemToEmptySlot(inventoryDropZone.RectTransform);
                 return;
             }
             
-            if (eventData.pointerEnter.TryGetComponent(out ItemSlotView itemSlotView))
+            if (dragDestinationObject.TryGetComponent(out ItemSlotView itemSlotView))
             {
                 EquipmentDropZone equipmentZone = itemSlotView.GetComponentInParent<EquipmentDropZone>();
 
@@ -109,10 +124,9 @@ namespace Tatsu.Core
                         return;
                     }
                     
+                    _equipmentService.EquipItem(_itemBaseData as EquipmentItemData);
+                    
                     MoveItemToOccupiedSlot(itemSlotView);
-                    
-                    new ItemEquippedEvent(_itemBaseData as EquipmentItemData).Invoke(this);
-                    
                     return;
                 }
                 
@@ -129,12 +143,45 @@ namespace Tatsu.Core
             ResetPositionToOrigin();
         }
         
-        public void Initialize(ItemBaseData itemBaseData)
+        public void Initialize(ItemBaseData itemBaseData, int quantity)
         {
             _itemBaseData = itemBaseData;
             _slotItemImage.sprite = itemBaseData.ItemSprite;
+            
+            _slotQuantity.SetText($"{quantity:00}");
+            _slotQuantity.gameObject.SetActive(itemBaseData.ItemType == ItemType.Consumable);
+            
+            _itemTooltipView.Initialize(itemBaseData.ItemName, itemBaseData.ItemDescription);
         }
         
+        public void UpdateQuantity(int quantity)
+        {
+            if (quantity == 0)
+            {
+                _slotQuantity.gameObject.SetActive(false);
+                RemoveItem();
+                
+                return;
+            }
+            
+            _slotQuantity.SetText($"{quantity:00}");
+        }
+        
+        protected void Start()
+        {
+            _inventoryService = ServiceLocator.GetChecked<IInventoryService>();
+            _equipmentService = ServiceLocator.GetChecked<IEquipmentService>();
+        }
+
+        private void RemoveItem()
+        {
+            Sequence consumeItemSequence = DOTween.Sequence();
+            consumeItemSequence.SetEase(Ease.Linear);
+            consumeItemSequence.Append(DOTween.To(() => _uiDissolve.effectFactor, value => _uiDissolve.effectFactor = value,
+                DissolveEndValue, DissolveDuration));
+            consumeItemSequence.AppendCallback(() => gameObject.Dispose(true));
+        }
+
         private void MoveItemToEmptySlot(RectTransform destinationParent)
         {
             _rectTransform.SetParent(destinationParent);
@@ -169,7 +216,7 @@ namespace Tatsu.Core
             _canvasGroup.blocksRaycasts = true;
             _canvas.sortingOrder = DefaultSortingOrder;
         }
-
+        
         private bool CheckForSameType(ItemType firstItem, ItemType secondItem)
         {
             return firstItem == secondItem;

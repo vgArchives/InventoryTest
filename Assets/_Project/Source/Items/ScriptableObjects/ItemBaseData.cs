@@ -2,9 +2,8 @@ using Coimbra;
 using UnityEngine;
 
 namespace Tatsu.Core
-{
-    [CreateAssetMenu(fileName = "ItemData", menuName = "Item Data/Item")]
-    public class ItemBaseData : ScriptableObject
+{ 
+    public abstract class ItemBaseData : ScriptableObject
     {
         [SerializeField] private string _itemName;
         [Space(10)]
@@ -21,12 +20,12 @@ namespace Tatsu.Core
         
         [SerializeField] private SerializableDictionary<StatType, int> _affectedStats = new ();
         
-        protected IPlayerStatsService _playerStatsService;
+        protected IPlayerStatsService PlayerStatsService;
         
+        public string ItemName => _itemName;
+        public string ItemDescription => _itemDescription;
         public Sprite ItemSprite => _itemSprite;
         public ItemType ItemType => _itemType;
         protected SerializableDictionary<StatType, int> AffectedStats => _affectedStats;
-        
-        public virtual void ResolveItemBehavior() { }
     }
 }

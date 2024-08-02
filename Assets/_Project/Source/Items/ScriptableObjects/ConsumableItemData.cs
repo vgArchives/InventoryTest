@@ -8,10 +8,10 @@ namespace Tatsu.Core
     [CreateAssetMenu(fileName = "ConsumableItemData", menuName = "Item/Consumable Item")]
     public class ConsumableItemData : ItemBaseData
     {
-        public override void ResolveItemBehavior()
+        public void ConsumeItem()
         {
-            _playerStatsService = ServiceLocator.GetChecked<IPlayerStatsService>();
-            SerializableDictionary<StatType, Stat> playerStats = _playerStatsService.PlayerStats;
+            PlayerStatsService = ServiceLocator.GetChecked<IPlayerStatsService>();
+            SerializableDictionary<StatType, Stat> playerStats = PlayerStatsService.PlayerStats;
 
             foreach (KeyValuePair<StatType, int> affectedStat in AffectedStats)
             {

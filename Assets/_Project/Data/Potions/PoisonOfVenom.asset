@@ -19,5 +19,5 @@ MonoBehaviour:
   _affectedStats:
     _list:
     - _key: 1
-      _value: -999
+      _value: -30
     _new: 0

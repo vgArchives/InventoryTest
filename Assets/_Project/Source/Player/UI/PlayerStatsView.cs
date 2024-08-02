@@ -8,6 +8,9 @@ namespace Tatsu.Core
     {
         [SerializeField] private GameObject _playerStatSlotPrefab;
         [SerializeField] private Transform _parentTransform;
+        [Space(10)]
+        
+        [SerializeField] private List<StatSlotView> _statSlotViews = new ();
         
         private IPlayerStatsService _playerStatsService;
 
@@ -20,11 +23,18 @@ namespace Tatsu.Core
 
         private void InitializeStatSlots()
         {
+            int count = _statSlotViews.Count;
+            int i = 0;
+            
             foreach (KeyValuePair<StatType, Stat> playerStat in _playerStatsService.PlayerStats)
             {
-                GameObject slotObject = Instantiate(_playerStatSlotPrefab, _parentTransform);
-                StatSlotView statSlotView = slotObject.GetComponent<StatSlotView>();
-                statSlotView.Initialize(playerStat);
+                if (i >= count)
+                {
+                    break;
+                }
+                
+                _statSlotViews[i].Initialize(playerStat);
+                i++;
             }
         }
     }

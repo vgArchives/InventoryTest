@@ -8,10 +8,10 @@ namespace Tatsu.Core
     [CreateAssetMenu(fileName = "EquipmentItemData", menuName = "Item/Equipment Item")]
     public class EquipmentItemData : ItemBaseData
     {
-        public void AddStats()
+        public void AddEquipmentStats()
         {
-            _playerStatsService = ServiceLocator.GetChecked<IPlayerStatsService>();
-            SerializableDictionary<StatType, Stat> playerStats = _playerStatsService.PlayerStats;
+            PlayerStatsService = ServiceLocator.GetChecked<IPlayerStatsService>();
+            SerializableDictionary<StatType, Stat> playerStats = PlayerStatsService.PlayerStats;
 
             foreach (KeyValuePair<StatType, int> affectedStat in AffectedStats)
             {
@@ -22,10 +22,10 @@ namespace Tatsu.Core
             }
         }
 
-        public void RemoveStats()
+        public void RemoveEquipmentStats()
         {
-            _playerStatsService = ServiceLocator.GetChecked<IPlayerStatsService>();
-            SerializableDictionary<StatType, Stat> playerStats = _playerStatsService.PlayerStats;
+            PlayerStatsService = ServiceLocator.GetChecked<IPlayerStatsService>();
+            SerializableDictionary<StatType, Stat> playerStats = PlayerStatsService.PlayerStats;
 
             foreach (KeyValuePair<StatType, int> affectedStat in AffectedStats)
             {

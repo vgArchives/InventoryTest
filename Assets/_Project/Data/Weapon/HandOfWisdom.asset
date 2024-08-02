@@ -21,4 +21,8 @@ MonoBehaviour:
     _list:
     - _key: 5
       _value: 100
+    - _key: 3
+      _value: -20
+    - _key: 4
+      _value: -20
     _new: 0
