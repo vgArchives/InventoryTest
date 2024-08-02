@@ -2,6 +2,7 @@ using Coffee.UIEffects;
 using Coimbra;
 using Coimbra.Services;
 using DG.Tweening;
+using Tatsu.Core._Project.Source.Inventory.Events;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -87,6 +88,8 @@ namespace Tatsu.Core
             _originalPosition = _rectTransform.anchoredPosition;
             _canvasGroup.alpha = DragCanvasTransparency;
             _canvasGroup.blocksRaycasts = false;
+
+            new InventoryDragStartedEvent(_itemBaseData.ItemType).Invoke(this);
         }
 
         public void OnDrag(PointerEventData eventData)
@@ -97,6 +100,8 @@ namespace Tatsu.Core
 
         public void OnEndDrag(PointerEventData eventData)
         {
+            new InventoryDragStoppedEvent().Invoke(this);
+            
             GameObject dragDestinationObject = eventData.pointerEnter ;
             
             if (dragDestinationObject == null)
