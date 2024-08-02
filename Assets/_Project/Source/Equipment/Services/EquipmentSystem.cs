@@ -7,6 +7,7 @@ namespace Tatsu.Core
 {
     public class EquipmentSystem : Actor, IEquipmentService
     {
+        [Space(10)]
         [SerializeField] private SerializableDictionary<ItemType, EquipmentItemData> _playerEquippedItems = new();
         
         private EquipmentSystem() { }

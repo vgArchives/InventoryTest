@@ -9,5 +9,7 @@ namespace Tatsu.Core
         public Animator PlayerAnimatorController { get; }
 
         public void PlayTriggerAnimation(AnimationType animationType);
+
+        public void SetBoolParameter(AnimationType animationType, bool state);
     }
 }

@@ -16,15 +16,16 @@ namespace Tatsu.Core
         public int OriginalValue => _originalValue;
         
         public int MaximumValue => _maximumValue;
+        public int EffectiveValue => _effectiveValue;
 
         public void Initialize()
         {
             _effectiveValue = _originalValue;
         }
 
-        public void UpdateStat(int itemValue)
+        public void UpdateStat(int value)
         {
-            _effectiveValue += itemValue;
+            _effectiveValue += value;
             _effectiveValue = Mathf.Clamp(_effectiveValue, 0, _maximumValue);
             
             OnStatValueChange?.Invoke(_originalValue, _effectiveValue, _maximumValue);

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ea4bb2be8d9415dadee052796ff90d5, type: 3}
   m_Name: HandOfWisdom
   m_EditorClassIdentifier: 
+  _itemId: 6
   _itemName: Hand of Wisdom
   _itemDescription: Gives a bonus of +100 points of Intelligence but reduce your
     Strength in -20 points and Agility in -20 points

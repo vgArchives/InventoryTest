@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ea4bb2be8d9415dadee052796ff90d5, type: 3}
   m_Name: CrimsonGuard
   m_EditorClassIdentifier: 
+  _itemId: 7
   _itemName: Crimson Guard
   _itemDescription: Gives a bonus of +15 points in Strength
   _itemSprite: {fileID: 21300000, guid: 8092a8f83e8726b42a5f2d8eb56da8e4, type: 3}

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ea4bb2be8d9415dadee052796ff90d5, type: 3}
   m_Name: OgreAxe
   m_EditorClassIdentifier: 
+  _itemId: 4
   _itemName: Ogre Axe
   _itemDescription: Gives a bonus of +50 points of Strength but reduce your Ability
     in -20 points

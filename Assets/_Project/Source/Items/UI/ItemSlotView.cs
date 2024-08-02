@@ -35,11 +35,15 @@ namespace Tatsu.Core
         private const float DragCanvasTransparency = 0.6f;
         private const float DefaultCanvasTransparency = 1f;
         
+        private const int PoisonItemId = 3;
+        
         private Vector2 _originalPosition;
         private ItemBaseData _itemBaseData;
 
         private IInventoryService _inventoryService;
         private IEquipmentService _equipmentService;
+        private IPlayerAnimationsService _playerAnimationsService;
+        private IPlayerStatsService _playerStatsService;
         
         public ItemBaseData ItemBaseData => _itemBaseData;
         public RectTransform RectTransform => _rectTransform;
@@ -61,6 +65,11 @@ namespace Tatsu.Core
         {
             _canvas.sortingOrder = HoverSortingOrder;
             _itemTooltipView.gameObject.SetActive(true);
+
+            if (_itemBaseData.ItemId == PoisonItemId)
+            {
+                _playerAnimationsService.PlayTriggerAnimation(AnimationType.Negative);
+            }
         }
 
         public void OnPointerExit(PointerEventData eventData)
@@ -94,7 +103,10 @@ namespace Tatsu.Core
             
             if (dragDestinationObject.TryGetComponent(out EquipmentDropZone equipmentDropZone))
             {
-                if (!CheckForSameType(_itemBaseData.ItemType, equipmentDropZone.ItemType))
+                bool isPlayerAlive = _playerStatsService.IsAlive;
+                bool isSameType = CheckForSameType(_itemBaseData.ItemType, equipmentDropZone.ItemType);
+
+                if (!isPlayerAlive || !isSameType)
                 {
                     ResetPositionToOrigin();
                     return;
@@ -118,7 +130,10 @@ namespace Tatsu.Core
 
                 if (equipmentZone != null)
                 {
-                    if (!CheckForSameType(_itemBaseData.ItemType, itemSlotView.ItemBaseData.ItemType))
+                    bool isPlayerAlive = _playerStatsService.IsAlive;
+                    bool isSameType = CheckForSameType(_itemBaseData.ItemType, itemSlotView.ItemBaseData.ItemType);
+
+                    if (!isPlayerAlive || !isSameType)
                     {
                         ResetPositionToOrigin();
                         return;
@@ -171,6 +186,8 @@ namespace Tatsu.Core
         {
             _inventoryService = ServiceLocator.GetChecked<IInventoryService>();
             _equipmentService = ServiceLocator.GetChecked<IEquipmentService>();
+            _playerAnimationsService = ServiceLocator.GetChecked<IPlayerAnimationsService>();
+            _playerStatsService = ServiceLocator.GetChecked<IPlayerStatsService>();
         }
 
         private void RemoveItem()

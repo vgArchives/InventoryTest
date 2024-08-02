@@ -1,4 +1,3 @@
-using System;
 using Coimbra.Services;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,31 +8,69 @@ namespace Tatsu.Core
     {
         [SerializeField] private Button _takeDamageButton;
         [SerializeField] private Button _useSpellButton;
+        [SerializeField] private Button _reviveButton;
+        [Space(10)] 
+        
+        [SerializeField] private int _damageValue = 25;
+        [SerializeField] private int _manaValue = 20;
+        [SerializeField] private int _reviveHealthValue = 10;
 
         private IPlayerAnimationsService _playerAnimationsService;
+        private IPlayerStatsService _playerStatsService;
 
         protected void Start()
         {
             _playerAnimationsService = ServiceLocator.GetChecked<IPlayerAnimationsService>();
+            _playerStatsService = ServiceLocator.GetChecked<IPlayerStatsService>();
             
             _takeDamageButton.onClick.AddListener(HandleTakeDamageButtonClick);
             _useSpellButton.onClick.AddListener(HandleUseSpellButtonClick);
+            _reviveButton.onClick.AddListener(HandleReviveButtonClick);
         }
         
         protected void OnDestroy()
         {
             _takeDamageButton.onClick.RemoveListener(HandleTakeDamageButtonClick);
             _useSpellButton.onClick.RemoveListener(HandleUseSpellButtonClick);
+            _reviveButton.onClick.RemoveListener(HandleReviveButtonClick);
         }
 
         private void HandleTakeDamageButtonClick()
         {
+            if (!GetPlayerAliveState())
+            {
+                return;
+            }
+            
             _playerAnimationsService.PlayTriggerAnimation(AnimationType.TakeDamage);
+            _playerStatsService.SubtractStatValue(StatType.Health, _damageValue);
         }
         
         private void HandleUseSpellButtonClick()
         {
+            if (!GetPlayerAliveState())
+            {
+                return;
+            }
+            
             _playerAnimationsService.PlayTriggerAnimation(AnimationType.Attack);
+            _playerStatsService.SubtractStatValue(StatType.Mana, _manaValue);
+        }
+        
+        private void HandleReviveButtonClick()
+        {
+            if (GetPlayerAliveState())
+            {
+                return;
+            }
+            
+            _playerAnimationsService.SetBoolParameter(AnimationType.Fainted, false);
+            _playerStatsService.AddStatValue(StatType.Health, _reviveHealthValue);
+        }
+
+        private bool GetPlayerAliveState()
+        {
+            return _playerStatsService.IsAlive;
         }
     }
 }

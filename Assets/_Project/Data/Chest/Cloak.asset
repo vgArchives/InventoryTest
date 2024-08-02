@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ea4bb2be8d9415dadee052796ff90d5, type: 3}
   m_Name: Cloak
   m_EditorClassIdentifier: 
+  _itemId: 9
   _itemName: Cloak
   _itemDescription: Gives a bonus of +15 points in Intelligence
   _itemSprite: {fileID: 21300000, guid: a35a45ead39df5e4ca4d2f1993487336, type: 3}

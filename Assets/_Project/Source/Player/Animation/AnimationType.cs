@@ -7,6 +7,7 @@ namespace Tatsu.Core
         Positive,
         Negative,
         PointAt,
-        LookAround
+        LookAround,
+        Fainted
     }
 }

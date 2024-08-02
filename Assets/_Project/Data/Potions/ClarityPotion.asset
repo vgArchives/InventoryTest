@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 510b9cca1e4e41c282f3bdf1aae15228, type: 3}
   m_Name: ClarityPotion
   m_EditorClassIdentifier: 
+  _itemId: 2
   _itemName: Clarity Potion
   _itemDescription: Restores 25 Mana points
   _itemSprite: {fileID: 21300000, guid: 08e1ffcd38a1a6643a35d3a89e0962c2, type: 3}

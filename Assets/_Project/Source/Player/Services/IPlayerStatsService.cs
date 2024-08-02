@@ -5,9 +5,13 @@ namespace Tatsu.Core
 {
     [RequiredService]
     public interface IPlayerStatsService : IService
-    {
+    { 
+        public bool IsAlive { get; }
+        
         public SerializableDictionary<StatType, Stat> PlayerStats { get;}
-
-        public void ResetStat(StatType statType);
+        
+        public void AddStatValue(StatType statType, int value);
+        
+        public void SubtractStatValue(StatType statType, int value);
     }
 }

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ea4bb2be8d9415dadee052796ff90d5, type: 3}
   m_Name: PowerTreads
   m_EditorClassIdentifier: 
+  _itemId: 10
   _itemName: Power Treads
   _itemDescription: Gives a bonus of +10 points in Strength
   _itemSprite: {fileID: 21300000, guid: a702e605c5878734a8f50f4325c878bd, type: 3}

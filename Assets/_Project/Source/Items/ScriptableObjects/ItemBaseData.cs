@@ -5,8 +5,11 @@ namespace Tatsu.Core
 { 
     public abstract class ItemBaseData : ScriptableObject
     {
-        [SerializeField] private string _itemName;
+        [SerializeField] private int _itemId;
         [Space(10)]
+        
+        [SerializeField] private string _itemName;
+        [Space(10)] 
         
         [TextArea]
         [SerializeField] private string _itemDescription;
@@ -21,7 +24,8 @@ namespace Tatsu.Core
         [SerializeField] private SerializableDictionary<StatType, int> _affectedStats = new ();
         
         protected IPlayerStatsService PlayerStatsService;
-        
+
+        public int ItemId => _itemId;
         public string ItemName => _itemName;
         public string ItemDescription => _itemDescription;
         public Sprite ItemSprite => _itemSprite;

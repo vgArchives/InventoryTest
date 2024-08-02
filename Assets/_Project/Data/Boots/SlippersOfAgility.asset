@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ea4bb2be8d9415dadee052796ff90d5, type: 3}
   m_Name: SlippersOfAgility
   m_EditorClassIdentifier: 
+  _itemId: 11
   _itemName: Slippers of Agility
   _itemDescription: Gives a bonus of +10 points in Agility
   _itemSprite: {fileID: 21300000, guid: 4bf8d08c18c96b64ea29a82f73e21dfd, type: 3}

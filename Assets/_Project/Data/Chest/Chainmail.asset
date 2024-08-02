@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ea4bb2be8d9415dadee052796ff90d5, type: 3}
   m_Name: Chainmail
   m_EditorClassIdentifier: 
+  _itemId: 8
   _itemName: Chainmail
   _itemDescription: Gives a bonus of +15 points in Agility
   _itemSprite: {fileID: 21300000, guid: 7bb8f34640077064c9d5b568a218b17e, type: 3}

@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 510b9cca1e4e41c282f3bdf1aae15228, type: 3}
   m_Name: PoisonOfVenom
   m_EditorClassIdentifier: 
+  _itemId: 3
   _itemName: Poison of Venom
-  _itemDescription: Instantly kills your character
+  _itemDescription: Poison your character consuming -30 points of his Health
   _itemSprite: {fileID: 21300000, guid: 18edabe7d38f9f44490d91ae11b5757a, type: 3}
   _itemType: 4
   _affectedStats:
     _list:
     - _key: 1
-      _value: -30
+      _value: -25
     _new: 0

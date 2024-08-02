@@ -5,7 +5,9 @@ namespace Tatsu.Core
 {
     public class PlayerAnimationsSystem : Actor, IPlayerAnimationsService
     {
+        [Space(10)]
         [SerializeField] private Animator _playerAnimatorController;
+        
         private PlayerAnimationsSystem() { }
 
         public Animator PlayerAnimatorController => _playerAnimatorController;
@@ -13,6 +15,11 @@ namespace Tatsu.Core
         public void PlayTriggerAnimation(AnimationType animationType)
         {
             _playerAnimatorController.SetTrigger(animationType.ToString());
+        }
+
+        public void SetBoolParameter(AnimationType animationType, bool state)
+        {
+            _playerAnimatorController.SetBool(animationType.ToString(), state);
         }
     }
 }

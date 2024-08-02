@@ -24,7 +24,7 @@ namespace Tatsu.Core
             if (_displayType == StatDisplayType.Percentage)
             {
                 float percentageValue = (float) stat.Value.OriginalValue / stat.Value.MaximumValue * 100;
-                _valueText.SetText($"{percentageValue:00}%");
+                _valueText.SetText($"{percentageValue:0}%");
             }
             else
             {
@@ -39,7 +39,7 @@ namespace Tatsu.Core
             if (_displayType == StatDisplayType.Percentage)
             {
                 float percentageValue = (float) effectiveValue / maximumValue * 100;
-                _valueText.SetText($"{percentageValue:00}%");
+                _valueText.SetText($"{percentageValue:0}%");
             }
             else
             { 
