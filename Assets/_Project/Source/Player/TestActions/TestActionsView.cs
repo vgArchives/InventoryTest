@@ -9,6 +9,7 @@ namespace Tatsu.Core
         [SerializeField] private Button _takeDamageButton;
         [SerializeField] private Button _useSpellButton;
         [SerializeField] private Button _reviveButton;
+        [SerializeField] private Button _quitButton;
         [Space(10)] 
         
         [SerializeField] private int _damageValue = 25;
@@ -26,6 +27,7 @@ namespace Tatsu.Core
             _takeDamageButton.onClick.AddListener(HandleTakeDamageButtonClick);
             _useSpellButton.onClick.AddListener(HandleUseSpellButtonClick);
             _reviveButton.onClick.AddListener(HandleReviveButtonClick);
+            _quitButton.onClick.AddListener(HandleQuitButtonClick);
         }
         
         protected void OnDestroy()
@@ -33,8 +35,9 @@ namespace Tatsu.Core
             _takeDamageButton.onClick.RemoveListener(HandleTakeDamageButtonClick);
             _useSpellButton.onClick.RemoveListener(HandleUseSpellButtonClick);
             _reviveButton.onClick.RemoveListener(HandleReviveButtonClick);
+            _quitButton.onClick.RemoveListener(HandleQuitButtonClick);
         }
-
+        
         private void HandleTakeDamageButtonClick()
         {
             if (!GetPlayerAliveState())
@@ -69,6 +72,11 @@ namespace Tatsu.Core
             
             _playerAnimationsService.SetBoolParameter(AnimationType.Fainted, false);
             _playerStatsService.AddStatValue(StatType.Health, _reviveHealthValue);
+        }
+        
+        private void HandleQuitButtonClick()
+        {
+            Application.Quit();
         }
 
         private bool GetPlayerAliveState()
