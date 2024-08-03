@@ -95,7 +95,14 @@ namespace Tatsu.Core
         public void OnDrag(PointerEventData eventData)
         {
             _canvas.sortingOrder = DragSortingOrder;
-            _rectTransform.anchoredPosition += eventData.delta;
+
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(_rectTransform, eventData.position, 
+                eventData.pressEventCamera, out Vector2 localPoint);
+            
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(_rectTransform, eventData.position - eventData.delta, 
+                eventData.pressEventCamera, out Vector2 localPointDelta);
+            
+            _rectTransform.anchoredPosition += localPoint - localPointDelta;
         }
 
         public void OnEndDrag(PointerEventData eventData)
