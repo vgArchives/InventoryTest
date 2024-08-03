@@ -59,7 +59,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -238,7 +238,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -313,7 +313,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -748,11 +748,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _slotItemImage: {fileID: 1512263493965241063}
   _slotQuantity: {fileID: 5303409747531197352}
-  _uiDissolve: {fileID: 2902086424741998901}
   _rectTransform: {fileID: 7388303889402963927}
   _canvas: {fileID: 1708987736182452694}
   _canvasGroup: {fileID: 1023550049799461717}
+  _currentSlotType: 0
   _itemTooltipView: {fileID: 3061186175533546530}
+  _uiDissolve: {fileID: 2902086424741998901}
 --- !u!1 &8570344421578911586
 GameObject:
   m_ObjectHideFlags: 0
