@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: PlayerInfoData
   m_EditorClassIdentifier: 
   _playerName: Unity-Chan
-  _playerAvatarSprite: {fileID: 21300000, guid: 3a8d4b9adbb9bee4fb5cbf46b55d8a07,
+  _playerAvatarSprite: {fileID: -1958295050, guid: 20617ee299b91e44d809229bcbe74956,
     type: 3}

@@ -20,11 +20,10 @@ namespace Tatsu.Core
         [SerializeField] private TextMeshProUGUI _maxValueText;
         [Space(5)]
         
-        [SerializeField] private float _valueTweenDuration = 0.5f;
+        [SerializeField] private float _valueTweenDuration = 0.35f;
         [Space(10)]
         
         private int _cachedFrontValue;
-        private Sequence _previewSequence;
         
         public void Initialize(int minValue, int maxValue, int currentValue)
         {

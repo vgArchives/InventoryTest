@@ -1,9 +1,11 @@
+using Coffee.UIEffects;
 using Coimbra.Services;
 using Coimbra.Services.Events;
-using Kaardik.Core;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using ColorMode = Coffee.UIEffects.ColorMode;
 
 namespace Tatsu.Core
 {
@@ -16,6 +18,8 @@ namespace Tatsu.Core
         [SerializeField] private SliderBarView _healthSlider;
         [SerializeField] private SliderBarView _manaSlider;
         [Space(10)]
+        
+        [SerializeField] private UIEffect _uiEffect;
         
         [Header("Shake Hud Parameters")]
         [SerializeField] private float _duration = 1f;
@@ -59,15 +63,32 @@ namespace Tatsu.Core
         {
             _healthSlider.TweenSliderValue(e.EffectiveHealthValue);
 
-            if (e.PreviousEffectiveHealthValue > e.EffectiveHealthValue)
+            if (e.PreviousEffectiveHealthValue <= e.EffectiveHealthValue)
             {
-                TatsuDOTweenUtils.ShakeUIObject(transform, _duration, _shakeAmount, _vibrato, _randomness);
+                return;
             }
+            
+            TatsuDOTweenUtils.ShakeUIObject(transform, _duration, _shakeAmount, _vibrato, _randomness);
+            TweenPlayerAvatarDamage();
         }
         
         private void HandlePlayerManaChangeEvent(ref EventContext context, in PlayerManaChangeEvent e)
         {
-            _manaSlider.TweenSliderValue(e.EffectiveHealthValue);
+            _manaSlider.TweenSliderValue(e.EffectiveManaValue);
+        }
+
+        private void TweenPlayerAvatarDamage()
+        {
+            _uiEffect.effectMode = EffectMode.None;
+            _uiEffect.effectFactor = 1f;
+            _uiEffect.colorMode = ColorMode.Fill;
+            _playerImage.color = Color.red;
+            _uiEffect.colorFactor = 0f;
+            
+            Sequence sequence = DOTween.Sequence();
+            sequence.SetEase(Ease.Linear);
+            sequence.Append(DOTween.To(() => _uiEffect.colorFactor, x => _uiEffect.colorFactor = x, 0.65f, 0.2f));
+            sequence.Append(DOTween.To(() => _uiEffect.colorFactor, x => _uiEffect.colorFactor = x, 0f, 0.2f));
         }
     }
 }

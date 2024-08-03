@@ -16,7 +16,9 @@ namespace Tatsu.Core
         [SerializeField] private float _blinkTweenDuration = 0.25f;
 
         private Image _currentHighlight;
+        
         private Sequence _highlightSequence;
+        private Sequence _attachedSequence;
         
         private EventHandle _inventoryDragStartedHandle;
         private EventHandle _inventoryDragStoppedHandle;
@@ -35,11 +37,13 @@ namespace Tatsu.Core
 
         private void HandleInventoryDragStartedEvent(ref EventContext context, in InventoryDragStartedEvent e)
         {
-            if (_equipmentHighlights.TryGetValue(e.ItemType, out Image highlightImage))
+            if (!_equipmentHighlights.TryGetValue(e.ItemType, out Image highlightImage))
             {
-                _currentHighlight = highlightImage;
-                TweenSlotHighlight(highlightImage);
+                return;
             }
+            
+            _currentHighlight = highlightImage;
+            TweenSlotHighlight(highlightImage);
         }
         
         private void HandleInventoryDragStoppedEvent(ref EventContext context, in InventoryDragStoppedEvent e)
@@ -47,13 +51,13 @@ namespace Tatsu.Core
             StopHighlightTween();
         }
 
-        private void TweenSlotHighlight(Image hihglightImage)
+        private void TweenSlotHighlight(Image highLightImage)
         {
-            hihglightImage.gameObject.SetActive(true);
+            highLightImage.gameObject.SetActive(true);
             
             _highlightSequence = DOTween.Sequence();
-            _highlightSequence.Append(hihglightImage.DOFade(1f, _blinkTweenDuration));
-            _highlightSequence.Append(hihglightImage.DOFade(0f, _blinkTweenDuration));
+            _highlightSequence.Append(highLightImage.DOFade(1f, _blinkTweenDuration));
+            _highlightSequence.Append(highLightImage.DOFade(0f, _blinkTweenDuration));
             _highlightSequence.SetEase(Ease.Linear);
             _highlightSequence.SetLoops(-1);
         }
@@ -65,7 +69,7 @@ namespace Tatsu.Core
                 return;
             }
             
-            _highlightSequence.Kill();
+            _highlightSequence.Kill(true);
             _currentHighlight.gameObject.SetActive(false);
         }
         

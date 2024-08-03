@@ -4,11 +4,13 @@ namespace Tatsu.Core
 {
     public readonly partial struct PlayerManaChangeEvent : IEvent
     {
-        public readonly int EffectiveHealthValue;
+        public readonly int EffectiveManaValue;
+        public readonly int PreviousEffectiveManaValue;
 
-        public PlayerManaChangeEvent(int effectiveHealthValue)
+        public PlayerManaChangeEvent(int effectiveManaValue, int previousEffectiveManaValue)
         {
-            EffectiveHealthValue = effectiveHealthValue;
+            EffectiveManaValue = effectiveManaValue;
+            PreviousEffectiveManaValue = previousEffectiveManaValue;
         }
     }
 }

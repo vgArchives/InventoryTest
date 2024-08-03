@@ -11,7 +11,8 @@
         "Coimbra.Services.Events",
         "Unity.TextMeshPro",
         "UIEffect",
-        "DOTween.Modules"
+        "DOTween.Modules",
+        ""
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

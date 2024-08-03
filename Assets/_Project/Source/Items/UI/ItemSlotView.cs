@@ -182,7 +182,10 @@ namespace Tatsu.Core
                         }
                         case SlotType.Equipment:
                         {
-                            if (CheckForSameType(_itemBaseData.ItemType, itemSlotView.ItemBaseData.ItemType))
+                            bool isPlayerAlive = _playerStatsService.IsAlive;
+                            bool isSameType = CheckForSameType(_itemBaseData.ItemType, itemSlotView.ItemBaseData.ItemType);
+                            
+                            if (isPlayerAlive || isSameType)
                             {
                                 SwapItemState(itemSlotView, SlotType.Inventory, SlotType.Equipment, itemSlotView.ItemBaseData, 
                                     _itemBaseData, _itemBaseData.ItemType, itemSlotView.ItemBaseData as EquipmentItemData);

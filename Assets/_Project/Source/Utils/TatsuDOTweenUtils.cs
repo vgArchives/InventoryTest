@@ -1,7 +1,7 @@
 using DG.Tweening;
 using UnityEngine;
 
-namespace Kaardik.Core
+namespace Tatsu.Core
 {
     public static class TatsuDOTweenUtils
     {

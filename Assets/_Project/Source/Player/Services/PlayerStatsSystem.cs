@@ -47,6 +47,11 @@ namespace Tatsu.Core
             stat.UpdateStat(-value);
         }
         
+        public Stat GetStat(StatType statType)
+        {
+            return _playerStats.GetValueOrDefault(statType);
+        }
+        
         protected override void OnInitialize()
         {
             base.OnInitialize();
@@ -57,14 +62,14 @@ namespace Tatsu.Core
             {
                 stat.Value.Initialize();
                 
-                if (stat.Key == StatType.Health)
+                switch (stat.Key)
                 {
-                    stat.Value.OnStatValueChange += HandleHealthValueChange;
-                }
-
-                if (stat.Key == StatType.Mana)
-                {
-                    stat.Value.OnStatValueChange += HandleManaValueChange;
+                    case StatType.Health:
+                        stat.Value.OnStatValueChange += HandleHealthValueChange;
+                        break;
+                    case StatType.Mana:
+                        stat.Value.OnStatValueChange += HandleManaValueChange;
+                        break;
                 }
             }
 
@@ -85,17 +90,12 @@ namespace Tatsu.Core
         
         private void HandleManaValueChange(int originalValue, int effectiveValue, int maximumValue, int previousEffectiveValue)
         {
-            new PlayerManaChangeEvent(effectiveValue).Invoke(this);
+            new PlayerManaChangeEvent(effectiveValue, previousEffectiveValue).Invoke(this);
         }
 
         private void SetAliveStatus(int healtValue)
         {
             _isAlive = healtValue > 0;
-        }
-        
-        public Stat GetStat(StatType statType)
-        {
-            return _playerStats.GetValueOrDefault(statType);
         }
     }
 }
