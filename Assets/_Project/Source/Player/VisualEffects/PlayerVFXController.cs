@@ -2,7 +2,7 @@ using Coimbra.Services;
 using Coimbra.Services.Events;
 using UnityEngine;
 
-namespace Tatsu.Core
+namespace Project.Core
 {
     public class PlayerVFXController : MonoBehaviour
     {

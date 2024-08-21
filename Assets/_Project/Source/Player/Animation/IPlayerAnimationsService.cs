@@ -1,7 +1,7 @@
 using Coimbra.Services;
 using UnityEngine;
 
-namespace Tatsu.Core
+namespace Project.Core
 {
     [RequiredService]
     public interface IPlayerAnimationsService : IService

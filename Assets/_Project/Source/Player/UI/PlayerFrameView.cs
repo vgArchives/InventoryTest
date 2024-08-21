@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using ColorMode = Coffee.UIEffects.ColorMode;
 
-namespace Tatsu.Core
+namespace Project.Core
 {
     public class PlayerFrameView : MonoBehaviour
     {

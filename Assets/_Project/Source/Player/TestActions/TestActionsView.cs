@@ -2,7 +2,7 @@ using Coimbra.Services;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Tatsu.Core
+namespace Project.Core
 {
     public class TestActionsView : MonoBehaviour
     {

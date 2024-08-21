@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Coimbra.Services;
 using UnityEngine;
 
-namespace Tatsu.Core
+namespace Project.Core
 {
     public class PlayerStatsView : MonoBehaviour
     {

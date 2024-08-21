@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Tatsu.Core
+namespace Project.Core
 {
     public class EquipmentDropZone : MonoBehaviour
     {

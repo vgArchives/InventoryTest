@@ -1,6 +1,6 @@
 using Coimbra.Services.Events;
 
-namespace Tatsu.Core
+namespace Project.Core
 {
     public readonly partial struct PlayerManaChangeEvent : IEvent
     {

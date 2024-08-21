@@ -1,7 +1,7 @@
 using DG.Tweening;
 using UnityEngine;
 
-namespace Tatsu.Core
+namespace Project.Core
 {
     public static class TatsuDOTweenUtils
     {

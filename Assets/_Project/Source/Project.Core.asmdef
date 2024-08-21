@@ -1,6 +1,6 @@
 {
-    "name": "Tatsu.Core",
-    "rootNamespace": "Tatsu.Core",
+    "name": "Project.Core",
+    "rootNamespace": "Project.Core",
     "references": [
         "Coimbra",
         "Coimbra.Editor",

@@ -2,11 +2,10 @@ using Coimbra;
 using Coimbra.Services;
 using Coimbra.Services.Events;
 using DG.Tweening;
-using Tatsu.Core._Project.Source.Inventory.Events;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Tatsu.Core
+namespace Project.Core
 {
     public class EquipmentView : MonoBehaviour
     {

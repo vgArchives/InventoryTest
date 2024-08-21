@@ -3,7 +3,7 @@ using Coimbra;
 using Coimbra.Services;
 using UnityEngine;
 
-namespace Tatsu.Core
+namespace Project.Core
 {
     public class PlayerStatsSystem : Actor, IPlayerStatsService
     {

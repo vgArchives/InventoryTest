@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Tatsu.Core
+namespace Project.Core
 {
     [Serializable]
     public class Stat

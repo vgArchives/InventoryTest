@@ -1,4 +1,4 @@
-namespace Tatsu.Core
+namespace Project.Core
 {
     public enum StatType
     {

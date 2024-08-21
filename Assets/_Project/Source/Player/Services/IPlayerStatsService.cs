@@ -1,7 +1,7 @@
 using Coimbra;
 using Coimbra.Services;
 
-namespace Tatsu.Core
+namespace Project.Core
 {
     [RequiredService]
     public interface IPlayerStatsService : IService

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-namespace Tatsu.Core
+namespace Project.Core
 {
     public class StatSlotView : MonoBehaviour
     {

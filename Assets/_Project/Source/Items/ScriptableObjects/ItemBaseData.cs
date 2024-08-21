@@ -1,7 +1,7 @@
 using Coimbra;
 using UnityEngine;
 
-namespace Tatsu.Core
+namespace Project.Core
 { 
     public abstract class ItemBaseData : ScriptableObject
     {

@@ -3,7 +3,7 @@ using Coimbra;
 using Coimbra.Services;
 using UnityEngine;
 
-namespace Tatsu.Core
+namespace Project.Core
 {
     [CreateAssetMenu(fileName = "ConsumableItemData", menuName = "Item/Consumable Item")]
     public class ConsumableItemData : ItemBaseData

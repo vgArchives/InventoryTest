@@ -2,13 +2,12 @@ using Coffee.UIEffects;
 using Coimbra;
 using Coimbra.Services;
 using DG.Tweening;
-using Tatsu.Core._Project.Source.Inventory.Events;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace Tatsu.Core
+namespace Project.Core
 {
     public class ItemSlotView : MonoBehaviour, 
         IPointerClickHandler,IPointerEnterHandler, IPointerExitHandler,
@@ -180,6 +179,8 @@ namespace Tatsu.Core
 
                 if (inventoryZone != null)
                 {
+                    Debug.Log(_currentSlotType);
+                    
                     switch (_currentSlotType)
                     {
                         case SlotType.Inventory:
@@ -192,7 +193,7 @@ namespace Tatsu.Core
                             bool isPlayerAlive = _playerStatsService.IsAlive;
                             bool isSameType = CheckForSameType(_itemBaseData.ItemType, itemSlotView.ItemBaseData.ItemType);
                             
-                            if (isPlayerAlive || isSameType)
+                            if (isPlayerAlive && isSameType)
                             {
                                 SwapItemState(itemSlotView, SlotType.Inventory, SlotType.Equipment, itemSlotView.ItemBaseData, 
                                     _itemBaseData, _itemBaseData.ItemType, itemSlotView.ItemBaseData as EquipmentItemData);

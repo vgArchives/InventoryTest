@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Tatsu.Core
+namespace Project.Core
 {
     [CreateAssetMenu(fileName = "PlayerInfoData", menuName = "Player/Player Data")]
     public class PlayerInformationData : ScriptableObject

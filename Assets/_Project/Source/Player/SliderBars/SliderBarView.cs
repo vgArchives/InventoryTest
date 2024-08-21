@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Tatsu.Core
+namespace Project.Core
 {
     public class SliderBarView : MonoBehaviour
     {
